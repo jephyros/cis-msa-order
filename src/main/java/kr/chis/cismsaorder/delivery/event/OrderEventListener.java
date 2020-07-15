@@ -1,7 +1,6 @@
 package kr.chis.cismsaorder.delivery.event;
 
 import kr.chis.cismsaorder.order.event.OrderSaveEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +11,9 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class OrderEventListener {// implements ApplicationListener<OrderSaveEvent>{
-//    @Override
-//    public void onApplicationEvent(OrderSaveEvent event) {
-//        System.out.println("================" + event.getOrderName());
-//    }
-
+public class OrderEventListener {
     @EventListener
-    public void handle(OrderSaveEvent event){
+    public void handle(OrderSaveEvent event) {
         System.out.println("================" + event.getOrderName());
 
     }
