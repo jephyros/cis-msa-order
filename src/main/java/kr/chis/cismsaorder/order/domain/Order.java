@@ -49,7 +49,6 @@ public class Order extends AbstractAggregateRoot<Order> {
     private String insert_id;
 
     public Order savePublish(){
-        System.out.println("======"+ getId());
         this.registerEvent(new OrderSaveEvent(this));
         return this;
     }
