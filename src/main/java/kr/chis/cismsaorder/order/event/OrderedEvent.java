@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationEvent;
  * Remark :
  */
 
-public class OrderSaveEvent extends ApplicationEvent {
+public class OrderedEvent extends ApplicationEvent {
     private Order order;
 
     /**
@@ -21,7 +21,7 @@ public class OrderSaveEvent extends ApplicationEvent {
      * @param source the object on which the event initially occurred or with
      *               which the event is associated (never {@code null})
      */
-    public OrderSaveEvent(Object source) {
+    public OrderedEvent(Object source) {
         super(source);
         this.order = (Order) source;
     }

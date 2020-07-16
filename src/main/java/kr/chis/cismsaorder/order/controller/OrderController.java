@@ -32,4 +32,15 @@ public class OrderController {
 
         return "/order/index";
     }
+    @GetMapping("/cancel")
+    public String orderCancel(){
+        Order order = new Order();
+        order.setOrderName("cancelTest");
+        order.setOrderStatus(OrderStatus.ORDER_PENGIND);
+        order.setOrderStatusTime(LocalDateTime.now());
+
+        orderService.cancel(order);
+
+        return "/order/ordercancel";
+    }
 }

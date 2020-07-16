@@ -1,12 +1,13 @@
 package kr.chis.cismsaorder.order.event;
 
 import kr.chis.cismsaorder.common.OrderStatus;
-import kr.chis.cismsaorder.delivery.event.OrderEventListener;
 import kr.chis.cismsaorder.order.domain.Order;
+import kr.chis.cismsaorder.order.repository.OrderRepository;
+import kr.chis.cismsaorder.order.service.OrderService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -18,10 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Remark :
  */
 
+
+
 @SpringBootTest
 @ActiveProfiles("test")
-class OrderSaveEventTest {
+//@Import(OrderedEventTestConfig.class)
+class OrderedEventTest {
 
+    @Autowired
+    OrderService orderService;
+    //OrderRepository orderRepository;
 
     @Test
     public void event_Publish_Test(){
@@ -31,7 +38,9 @@ class OrderSaveEventTest {
                 .orderStatus(OrderStatus.ORDER_PENGIND)
                 .build();
         //when
-        order.savePublish();
+
+        //orderRepository.save(order.savePublish());
+        orderService.save(order);
         //then
         assertThat("d").isEqualTo("d");
 

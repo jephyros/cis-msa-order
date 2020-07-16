@@ -9,5 +9,5 @@ import kr.chis.cismsaorder.order.domain.Order;
  */
 public interface OrderService {
     public Order save(Order order);
-
+    public Order cancel(Order order);
 }

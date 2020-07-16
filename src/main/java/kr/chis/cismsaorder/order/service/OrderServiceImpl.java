@@ -1,10 +1,8 @@
 package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.order.domain.Order;
-import kr.chis.cismsaorder.order.event.OrderSaveEvent;
 import kr.chis.cismsaorder.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,9 +21,15 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     public Order save(Order order) {
+
         Order saveOrder = orderRepository.save(order.savePublish());
 
+        return saveOrder;
+    }
 
+    @Override
+    public Order cancel(Order order) {
+        Order saveOrder = orderRepository.save(order.cancelPublish());
 
         return saveOrder;
     }

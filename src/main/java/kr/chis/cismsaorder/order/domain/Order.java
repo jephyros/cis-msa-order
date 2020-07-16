@@ -1,11 +1,9 @@
 package kr.chis.cismsaorder.order.domain;
 
 import kr.chis.cismsaorder.common.OrderStatus;
-import kr.chis.cismsaorder.order.event.OrderSaveEvent;
-import kr.chis.cismsaorder.order.repository.OrderRepository;
+import kr.chis.cismsaorder.order.event.OrderCanceledEvent;
+import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
@@ -49,8 +47,12 @@ public class Order extends AbstractAggregateRoot<Order> {
     private String insert_id;
 
     public Order savePublish(){
-        this.registerEvent(new OrderSaveEvent(this));
+        this.registerEvent(new OrderedEvent(this));
         return this;
     }
 
+    public Order cancelPublish() {
+        this.registerEvent(new OrderCanceledEvent(this));
+        return this;
+    }
 }
