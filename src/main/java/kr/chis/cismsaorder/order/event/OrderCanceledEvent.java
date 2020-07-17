@@ -1,7 +1,6 @@
 package kr.chis.cismsaorder.order.event;
 
 import kr.chis.cismsaorder.order.domain.Order;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.context.ApplicationEvent;
 
 /**

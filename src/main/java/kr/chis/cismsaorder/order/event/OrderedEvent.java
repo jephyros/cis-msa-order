@@ -1,9 +1,6 @@
 package kr.chis.cismsaorder.order.event;
 
 import kr.chis.cismsaorder.order.domain.Order;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 /**
