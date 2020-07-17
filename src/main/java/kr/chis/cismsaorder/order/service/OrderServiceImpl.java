@@ -27,6 +27,10 @@ public class OrderServiceImpl implements OrderService  {
     @Transactional
     public Order save(Order order) {
 
+        if (!isValidOrderAmount(order.totalAmount())) {
+            throw new IllegalStateException(String.format("최소 주문 금액은  %s 원 이상 입니다.", "12,000"));
+        }
+
         Order saveOrder = orderRepository.save(order.savePublish());
 
         return saveOrder;
@@ -37,6 +41,14 @@ public class OrderServiceImpl implements OrderService  {
         Order saveOrder = orderRepository.save(order.cancelPublish());
 
         return saveOrder;
+    }
+
+    private boolean isValidOrderAmount(Long totalAmount) {
+        if (totalAmount < 12000) {
+            return false;
+        }
+        return true;
+
     }
 
     @Override

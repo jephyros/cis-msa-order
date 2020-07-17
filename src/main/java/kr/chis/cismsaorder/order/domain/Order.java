@@ -55,4 +55,8 @@ public class Order extends AbstractAggregateRoot<Order> {
         this.registerEvent(new OrderCanceledEvent(this));
         return this;
     }
+
+    public Long totalAmount() {
+        return 10000L;
+    }
 }
