@@ -36,7 +36,7 @@ public class Order extends AbstractAggregateRoot<Order> {
     @Column(name="od_status")
     private OrderStatus orderStatus;
 
-    @Column(name="od_status_data")
+    @Column(name="od_status_date")
     private LocalDateTime orderStatusTime;
 
 

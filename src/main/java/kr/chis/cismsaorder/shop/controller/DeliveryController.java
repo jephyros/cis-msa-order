@@ -1,4 +1,4 @@
-package kr.chis.cismsaorder.delivery.controller;
+package kr.chis.cismsaorder.shop.controller;
 
 /**
  * @author InSeok

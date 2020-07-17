@@ -1,8 +1,6 @@
 package kr.chis.cismsaorder.order.event;
 
-import kr.chis.cismsaorder.delivery.event.DeliveryEventListener;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import kr.chis.cismsaorder.shop.event.ShopEventListener;
 
 /**
  * @author InSeok
@@ -12,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 //@Configuration
 public class OrderedEventTestConfig {
     //@Bean
-    public DeliveryEventListener orderedEventListener(){
-        return new DeliveryEventListener();
+    public ShopEventListener orderedEventListener(){
+        return new ShopEventListener(ticketService);
     }
 }

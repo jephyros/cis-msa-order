@@ -2,6 +2,8 @@ package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.order.domain.Order;
 
+import javax.swing.border.Border;
+
 /**
  * @author InSeok
  * Date : 2020-07-15
@@ -10,4 +12,6 @@ import kr.chis.cismsaorder.order.domain.Order;
 public interface OrderService {
     public Order save(Order order);
     public Order cancel(Order order);
+
+    public Order orderAccept(Long orderId);
 }
