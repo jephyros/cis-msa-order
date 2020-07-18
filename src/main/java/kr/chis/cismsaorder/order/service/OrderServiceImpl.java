@@ -3,6 +3,7 @@ package kr.chis.cismsaorder.order.service;
 import kr.chis.cismsaorder.common.OrderStatus;
 import kr.chis.cismsaorder.order.domain.Order;
 import kr.chis.cismsaorder.order.domain.OrderRepository;
+import kr.chis.cismsaorder.order.domain.OrderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +18,19 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService  {
     private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator) {
         this.orderRepository = orderRepository;
+        this.orderValidator = orderValidator;
     }
 
     @Override
     @Transactional
     public Order save(Order order) {
 
-        if (!isValidOrderAmount(order.totalAmount())) {
-            throw new IllegalStateException(String.format("최소 주문 금액은  %s 원 이상 입니다.", "12,000"));
-        }
-
+        order.validate(orderValidator);
         Order saveOrder = orderRepository.save(order.savePublish());
 
         return saveOrder;
@@ -43,13 +43,6 @@ public class OrderServiceImpl implements OrderService  {
         return saveOrder;
     }
 
-    private boolean isValidOrderAmount(Long totalAmount) {
-        if (totalAmount < 12000) {
-            return false;
-        }
-        return true;
-
-    }
 
     @Override
     @Transactional

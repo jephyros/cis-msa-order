@@ -24,17 +24,17 @@ import java.time.LocalDateTime;
 public class Ticket extends AbstractAggregateRoot<Ticket> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="sp_id")
+    @Column(name="st_id")
     private Long id;
 
-    @Column(name="sp_od_id")
+    @Column(name="st_od_id")
     private Long orderId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="sp_status")
+    @Column(name="st_status")
     private TicketStatus ticketStatus;
 
-    @Column(name="sp_status_date")
+    @Column(name="st_status_date")
     private LocalDateTime ticketStatusTime;
 
     public Ticket TicketOpenedPublish(){

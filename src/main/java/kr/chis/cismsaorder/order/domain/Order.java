@@ -32,6 +32,9 @@ public class Order extends AbstractAggregateRoot<Order> {
     @Column(name="od_name")
     private String orderName;
 
+    @Column(name="od_shop_id")
+    private Long shopId;
+
     @Enumerated(EnumType.STRING)
     @Column(name="od_status")
     private OrderStatus orderStatus;
@@ -46,6 +49,7 @@ public class Order extends AbstractAggregateRoot<Order> {
     @Column(name="insert_id")
     private String insert_id;
 
+    private Long orderAmoumt;
     public Order savePublish(){
         this.registerEvent(new OrderedEvent(this));
         return this;
@@ -57,6 +61,9 @@ public class Order extends AbstractAggregateRoot<Order> {
     }
 
     public Long totalAmount() {
-        return 10000L;
+        return orderAmoumt;
+    }
+    public void validate(OrderValidator orderValidator){
+        orderValidator.validate(this);
     }
 }

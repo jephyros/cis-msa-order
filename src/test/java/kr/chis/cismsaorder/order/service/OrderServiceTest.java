@@ -1,16 +1,20 @@
 package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.common.OrderStatus;
+import kr.chis.cismsaorder.common.ShopStatus;
 import kr.chis.cismsaorder.order.domain.Order;
+import kr.chis.cismsaorder.shop.domain.Shop;
+import kr.chis.cismsaorder.shop.repository.ShopRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author InSeok
@@ -24,12 +28,27 @@ class OrderServiceTest {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    ShopRepository shopRepository;
+
+
     @Test
     void save() {
+        //given
+        Shop s1 = Shop.builder()
+                .minOrderAmt(12000L)
+                .shopStatus(ShopStatus.OPEN)
+                .shopName("양꼬치대장").build();
+        shopRepository.save(s1);
+
+        Optional<Shop> save1 = shopRepository.findByShopName("양꼬치대장");
+
         Order order = new Order();
         order.setOrderName("test");
+        order.setShopId(save1.get().getId());
         order.setOrderStatus(OrderStatus.ORDER_PENGIND);
         order.setOrderStatusTime(LocalDateTime.now());
+        order.setOrderAmoumt(11000L);
         orderService.save(order);
         assertThat("d").describedAs("오더 저장 [expect:d]").isEqualTo("d");
     }
