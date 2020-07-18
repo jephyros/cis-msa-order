@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -48,8 +49,9 @@ class OrderServiceTest {
         order.setShopId(save1.get().getId());
         order.setOrderStatus(OrderStatus.ORDER_PENGIND);
         order.setOrderStatusTime(LocalDateTime.now());
-        order.setOrderAmoumt(11000L);
+        order.setOrderAmoumt(13000L);
         orderService.save(order);
         assertThat("d").describedAs("오더 저장 [expect:d]").isEqualTo("d");
+        //System.out.println("==============" + System.currentTimeMillis());
     }
 }

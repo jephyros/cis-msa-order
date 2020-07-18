@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationEvent;
 
 public class OrderedEvent extends ApplicationEvent {
     private Order order;
+    private Long eventTimestamp;
 
     /**
      * Create a new {@code ApplicationEvent}.
@@ -21,6 +22,7 @@ public class OrderedEvent extends ApplicationEvent {
     public OrderedEvent(Object source) {
         super(source);
         this.order = (Order) source;
+        this.eventTimestamp = System.currentTimeMillis();
     }
 
     public Long getOrderId(){
@@ -29,4 +31,5 @@ public class OrderedEvent extends ApplicationEvent {
     public String getOrderName(){
         return order.getOrderName();
     }
+    public Long getEventTimestamp() { return this.eventTimestamp;}
 }
