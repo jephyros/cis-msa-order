@@ -5,6 +5,7 @@ import kr.chis.cismsaorder.order.domain.Order;
 import kr.chis.cismsaorder.order.domain.OrderRepository;
 import kr.chis.cismsaorder.order.domain.OrderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,11 +20,13 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService  {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
+    private final KafkaTemplate<String ,String> kafkaTemplate;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator, KafkaTemplate<String, String> kafkaTemplate) {
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -32,6 +35,8 @@ public class OrderServiceImpl implements OrderService  {
 
         order.validate(orderValidator);
         Order saveOrder = orderRepository.save(order.savePublish());
+
+        kafkaTemplate.send("msaorder","{CISDATA}");
 
         return saveOrder;
     }
