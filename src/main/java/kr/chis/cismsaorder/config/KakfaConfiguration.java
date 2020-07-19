@@ -19,6 +19,7 @@ import java.util.Map;
  */
 @Configuration
 public class KakfaConfiguration {
+
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> config = new HashMap<>();
@@ -35,5 +36,4 @@ public class KakfaConfiguration {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-
 }
