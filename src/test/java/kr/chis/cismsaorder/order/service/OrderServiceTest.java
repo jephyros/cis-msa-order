@@ -34,20 +34,20 @@ class OrderServiceTest {
 
 
     @Test
-    void save() {
+    void 오더_정상등록() {
         //given
 
 
         Optional<Shop> save1 = shopRepository.findByShopName("양꼬치대장");
 
         Order order = new Order();
-        order.setOrderName("test");
+        order.setOrderName("testordername");
         order.setShopId(save1.get().getId());
         order.setOrderStatus(OrderStatus.ORDER_PENGIND);
         order.setOrderStatusTime(LocalDateTime.now());
         order.setOrderAmoumt(13000L);
-        orderService.save(order);
-        assertThat("d").describedAs("오더 저장 [expect:d]").isEqualTo("d");
+        Order saveorder = orderService.save(order);
+        assertThat(saveorder.getOrderName()).describedAs("오더 정상저장 [expect]:testordername").isEqualTo("testordername");
 
 
         //System.out.println("==============" + System.currentTimeMillis());
@@ -66,9 +66,10 @@ class OrderServiceTest {
         order.setOrderStatus(OrderStatus.ORDER_PENGIND);
         order.setOrderStatusTime(LocalDateTime.now());
         order.setOrderAmoumt(11000L);
-        orderService.save(order);
 
-        //Assertions.assertThrows(IllegalStateException.class, ()->{  })
+        //when then
+        //최소금액 12000원인데 오더금액은 11000원 이기때문에 IllegalStateException이 발생되야한다.
+        Assertions.assertThrows(IllegalStateException.class, ()-> orderService.save(order));
 
         //System.out.println("==============" + System.currentTimeMillis());
 
