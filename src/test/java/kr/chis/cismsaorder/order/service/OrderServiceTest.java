@@ -36,11 +36,7 @@ class OrderServiceTest {
     @Test
     void save() {
         //given
-        Shop s1 = Shop.builder()
-                .minOrderAmt(12000L)
-                .shopStatus(ShopStatus.OPEN)
-                .shopName("양꼬치대장").build();
-        shopRepository.save(s1);
+
 
         Optional<Shop> save1 = shopRepository.findByShopName("양꼬치대장");
 

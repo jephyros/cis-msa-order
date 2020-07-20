@@ -8,6 +8,8 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author InSeok
@@ -31,6 +33,10 @@ public class Order extends AbstractAggregateRoot<Order> {
 
     @Column(name="od_name")
     private String orderName;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "od_id")
+    private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     @Column(name="od_shop_id")
     private Long shopId;
