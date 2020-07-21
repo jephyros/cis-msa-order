@@ -26,7 +26,7 @@ public class OrderValidator {
         validator(order,getShop(order.getShopId()));
     }
 
-    private void validator(Order order, Shop shop){
+    public void validator(Order order, Shop shop){
         //인자값 Null 체크
         //가게가 영업 중 인가?
         if(!shop.isOpen()){

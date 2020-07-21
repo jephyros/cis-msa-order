@@ -12,15 +12,14 @@ import java.time.LocalDateTime;
  * Date : 2020/07/18
  * Remark :
  */
+
 @Entity
 @Getter
 @Setter
-@ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name="sp_shop")
 public class Shop {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="sp_id")
@@ -35,6 +34,18 @@ public class Shop {
 
     @Column(name="sp_min_order_amt")
     private Long minOrderAmt;
+
+
+    public Shop() {
+    }
+
+    @Builder
+    public Shop(String shopName, ShopStatus shopStatus, Long minOrderAmt) {
+        this.shopName = shopName;
+        this.shopStatus = shopStatus;
+        this.minOrderAmt = minOrderAmt;
+    }
+
 
     public boolean isOpen() {
         if ( this.shopStatus == ShopStatus.OPEN){

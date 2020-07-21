@@ -23,10 +23,12 @@ public class OrderController {
 
     @GetMapping("")
     public String orderIndex(){
-        Order order = new Order();
-        order.setOrderName("test");
-        order.setOrderStatus(OrderStatus.ORDER_PENGIND);
-        order.setOrderStatusTime(LocalDateTime.now());
+        Order order = Order.builder()
+                .orderName("test")
+                .orderStatus(OrderStatus.ORDER_PENGIND)
+                .orderStatusTime(LocalDateTime.now())
+                .build();
+
 
         orderService.save(order);
 
@@ -34,10 +36,11 @@ public class OrderController {
     }
     @GetMapping("/cancel")
     public String orderCancel(){
-        Order order = new Order();
-        order.setOrderName("cancelTest");
-        order.setOrderStatus(OrderStatus.ORDER_PENGIND);
-        order.setOrderStatusTime(LocalDateTime.now());
+        Order order = Order.builder()
+                .orderName("canceltest")
+                .orderStatus(OrderStatus.ORDER_PENGIND)
+                .orderStatusTime(LocalDateTime.now())
+                .build();
 
         orderService.cancel(order);
 

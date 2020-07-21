@@ -3,7 +3,9 @@ package kr.chis.cismsaorder.order.domain;
 import kr.chis.cismsaorder.common.OrderStatus;
 import kr.chis.cismsaorder.order.event.OrderCanceledEvent;
 import kr.chis.cismsaorder.order.event.OrderedEvent;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
@@ -18,18 +20,12 @@ import java.util.List;
  */
 @Entity
 @Getter
-@Setter
-@ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name="od_order")
 public class Order extends AbstractAggregateRoot<Order> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="od_id")
     private Long id;
-
 
     @Column(name="od_name")
     private String orderName;
@@ -56,6 +52,26 @@ public class Order extends AbstractAggregateRoot<Order> {
     private String insert_id;
 
     private Long orderAmoumt;
+
+    public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, Long orderAmoumt) {
+        this(orderName, orderLineItems, shopId, orderStatus, LocalDateTime.now(), LocalDateTime.now(), null, orderAmoumt);
+    }
+
+
+    @Builder
+    public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime, LocalDateTime insertDateTime, String insert_id, Long orderAmoumt) {
+        this.orderName = orderName;
+        this.orderLineItems = orderLineItems;
+        this.shopId = shopId;
+        this.orderStatus = orderStatus;
+        this.orderStatusTime = orderStatusTime;
+        this.insertDateTime = insertDateTime;
+        this.insert_id = insert_id;
+        this.orderAmoumt = orderAmoumt;
+    }
+
+
+
     public Order savePublish(){
         this.registerEvent(new OrderedEvent(this));
         return this;
@@ -71,5 +87,9 @@ public class Order extends AbstractAggregateRoot<Order> {
     }
     public void validate(OrderValidator orderValidator){
         orderValidator.validate(this);
+    }
+    public void ChangeOrderStatusAccept() {
+        this.orderStatus = OrderStatus.ORDER_ACCEPT;
+        this.orderStatusTime = LocalDateTime.now();
     }
 }

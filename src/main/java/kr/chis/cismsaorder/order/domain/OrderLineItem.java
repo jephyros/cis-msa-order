@@ -10,7 +10,6 @@ import javax.persistence.*;
  * Remark :
  */
 @Entity
-@Getter
 @Table(name="od_order_item")
 public class OrderLineItem {
     @Id
@@ -30,6 +29,7 @@ public class OrderLineItem {
 
     @Column(name="oi_amt")
     private Long orderAmount;
+
 
 
 }

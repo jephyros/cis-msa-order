@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService  {
     public Order orderAccept(Long orderId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if(optionalOrder.isPresent()){
-            optionalOrder.get().setOrderStatus(OrderStatus.ORDER_ACCEPT);
+            optionalOrder.get().ChangeOrderStatusAccept();
             return optionalOrder.get();
         }
         throw new RuntimeException("수정하려는오더가없음");
