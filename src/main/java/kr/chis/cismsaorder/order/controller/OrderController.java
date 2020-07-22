@@ -6,6 +6,7 @@ import kr.chis.cismsaorder.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
@@ -23,26 +24,12 @@ public class OrderController {
 
     @GetMapping("")
     public String orderIndex(){
-        Order order = Order.builder()
-                .orderName("test")
-                .orderStatus(OrderStatus.ORDER_PENGIND)
-                .orderStatusTime(LocalDateTime.now())
-                .build();
 
-
-        orderService.save(order);
 
         return "/order/index";
     }
-    @GetMapping("/cancel")
-    public String orderCancel(){
-        Order order = Order.builder()
-                .orderName("canceltest")
-                .orderStatus(OrderStatus.ORDER_PENGIND)
-                .orderStatusTime(LocalDateTime.now())
-                .build();
-
-        orderService.cancel(order);
+    @GetMapping("/cancel/{id}")
+    public String orderCancel(@PathVariable Long id){
 
         return "/order/ordercancel";
     }
