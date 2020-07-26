@@ -21,7 +21,7 @@ public class LoadTest {
         ExecutorService es = Executors.newFixedThreadPool(100);
 
         RestTemplate rt = new RestTemplate();
-        String url = "http://localhost:8080/api/order/resttest?idx={idx}";
+        String url = "http://localhost:8081/api/v1/shops";
         //String url = "http://aci.broadwave.co.kr";
 
 
@@ -36,9 +36,9 @@ public class LoadTest {
 
                 log.info("Thread {}", idx);
                 sw.start();
-                String result = rt.getForObject(url, String.class, idx);
+                String result = rt.getForObject(url, String.class);
                 sw.stop();
-                log.info("Elasped {} : {} - result : {}", idx, sw.getTotalTimeSeconds(), result);
+                log.info("Elasped {} : {} - result : {}", idx, sw.getTotalTimeSeconds(), result.toString());
                 return null;
             });
         }

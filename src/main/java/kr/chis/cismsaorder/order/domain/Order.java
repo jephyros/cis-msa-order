@@ -31,7 +31,7 @@ public class Order extends AbstractAggregateRoot<Order> {
     private String orderName;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "od_id")
+    @JoinColumn(name ="oi_od_id")
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     @Column(name="od_shop_id")
@@ -53,15 +53,22 @@ public class Order extends AbstractAggregateRoot<Order> {
 
     private Long orderAmoumt;
 
-    public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, Long orderAmoumt) {
-        this(orderName, orderLineItems, shopId, orderStatus, LocalDateTime.now(), LocalDateTime.now(), null, orderAmoumt);
+    public void addItem(OrderLineItem orderLineItem){
+        this.orderLineItems.add(orderLineItem);
     }
 
+    public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, Long orderAmoumt) {
+        this(null,orderName, orderLineItems, shopId, orderStatus, LocalDateTime.now(), LocalDateTime.now(), null, orderAmoumt);
+    }
+
+    public Order() {
+    }
 
     @Builder
-    public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime, LocalDateTime insertDateTime, String insert_id, Long orderAmoumt) {
+    public Order(Long id,String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime, LocalDateTime insertDateTime, String insert_id, Long orderAmoumt) {
+        this.id = id;
         this.orderName = orderName;
-        this.orderLineItems = orderLineItems;
+        this.orderLineItems.addAll(orderLineItems);
         this.shopId = shopId;
         this.orderStatus = orderStatus;
         this.orderStatusTime = orderStatusTime;
