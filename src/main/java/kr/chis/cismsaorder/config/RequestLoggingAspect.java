@@ -3,21 +3,15 @@ package kr.chis.cismsaorder.config;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author InSeok
  * Date : 2020-07-22
  * Remark : AOP를 사용하여 Controller 클래스의 로그를 남기는 클래스
  */
-@Component
+//@Component
 @Slf4j
-@Aspect
+//@Aspect
 public class RequestLoggingAspect {
 
 

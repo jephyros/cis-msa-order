@@ -9,6 +9,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -52,11 +53,22 @@ public class OrderServiceImpl implements OrderService  {
     @Override
     @Transactional
     public Order orderAccept(Long orderId) {
-        Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        if(optionalOrder.isPresent()){
-            optionalOrder.get().ChangeOrderStatusAccept();
-            return optionalOrder.get();
-        }
-        throw new RuntimeException("수정하려는오더가없음");
+        return orderRepository.findById(orderId)
+                .map((order)-> {
+                    order.ChangeOrderStatusAccept();
+                    return order;
+                }).orElseThrow(()-> new NoSuchElementException("수정하려는 오더가없음니다."));
+
+
+    }
+
+    @Override
+    public void del(Long orderid) {
+        orderRepository.findById(orderid).ifPresentOrElse(
+             (order)-> orderRepository.delete(order)
+            ,()-> {
+                 throw new NoSuchElementException("삭제하고자하는 데이터가 없습니다.");
+                }
+            );
     }
 }

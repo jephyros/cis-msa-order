@@ -12,4 +12,6 @@ public interface OrderService {
     public Order cancel(Order order);
 
     public Order orderAccept(Long orderId);
+
+    public void del(Long orderid);
 }

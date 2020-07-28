@@ -4,7 +4,83 @@
     <meta charset="UTF-8">
     <title>Order</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
+
+</script>
+<script>
+    $(function(){
+
+        $("#btnSave").on('click',function(){
+            save();
+        });
+        $("#btnDel").on('click',function(){
+            del();
+        });
+
+
+    })
+    function save(){
+
+
+        var $form = $('form[name="frmreg"]');
+
+        var params = $form.serialize();
+
+        // var token = $("meta[name='_csrf']").attr("content");
+        // var header = $("meta[name='_csrf_header']").attr("content");
+        // $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+
+        $.ajax({
+            url:'/api/order/reg',
+            type : 'post',
+            //dataType: 'html',
+            data : params,
+            cache:false,
+            error:function(request,status,error){
+                alert("error:"+error);
+            },
+            success: function(res){
+                alert('저장되었습니다. ');
+
+            }
+        });
+    }
+
+    function del(){
+
+        var params = {
+            orderid:$("#orderid").val()
+        };
+        alert($("#orderid").val());
+
+        $.ajax({
+            url:'/api/order/del',
+            type : 'post',
+            //dataType: 'html',
+            data : params,
+            cache:false,
+            error:function(request,status,error){
+               alert(error);
+            },
+            success: function(res){
+                alert("삭제되었습니다.")
+            }
+        });
+    }
+</script>
 <body>
     오더등록 화면
+    <form name="frmreg">
+        <table class="c-table c-table--non-border">
+        <tr>
+            <td>오더내용1</td>
+        </tr>
+        </table>
+    </form>
+
+    <div ><button id="btnSave">오더저장</button></div>
+    <div ><input type="text" id="orderid" value="1"><button id="btnDel">오더삭제</button></div>
+
+
 </body>
 </html>

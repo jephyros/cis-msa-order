@@ -22,6 +22,7 @@ class OrderTest {
         assertThat(OrderStatus.ORDER_ACCEPT).describedAs("오더 상태값 [expect : ORDER_ACCEPT]").isEqualTo(order.getOrderStatus());
 
     }
+
     @Test
     void 오더_아이템추가_저장(){
         Order order = anOrder().orderAmoumt(11000L).build();
