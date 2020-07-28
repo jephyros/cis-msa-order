@@ -21,7 +21,7 @@ public class LoadTest {
         ExecutorService es = Executors.newFixedThreadPool(100);
 
         RestTemplate rt = new RestTemplate();
-        String url = "http://localhost:8081/api/v1/shops";
+        String url = "http://localhost:8081/api/v1/shops/1";
         //String url = "http://aci.broadwave.co.kr";
 
 
