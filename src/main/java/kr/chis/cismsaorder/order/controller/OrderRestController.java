@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -84,16 +85,15 @@ public class OrderRestController {
         return null;
     }
     @GetMapping("list")
-    public Page<OrderLineItemDto> orderList(@RequestParam(value="ordername", defaultValue="") String ordername
-                                            , @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
+    public List<OrderLineItemDto> orderList(@RequestParam(value="ordername", defaultValue="") String ordername
+                                            ){
 
-        return orderService.findAllSearchString(ordername, pageable);
+        return orderService.findAllSearchString(ordername);
     }
     @GetMapping("list2")
-    public Page<Order> orderList2(
-             @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
+    public List<Order> orderList2(){
 
-        return orderService.findAllOrder(pageable);
+        return orderService.findAllOrder();
     }
 
 

@@ -2,12 +2,11 @@ package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.order.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -73,12 +72,12 @@ public class OrderServiceImpl implements OrderService  {
     }
 
     @Override
-    public Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable) {
-        return orderRepositoryCustom.findAllSearchString(ordername,pageable);
+    public List<OrderLineItemDto> findAllSearchString(String ordername) {
+        return orderRepositoryCustom.findAllSearchString(ordername);
     }
 
     @Override
-    public Page<Order> findAllOrder(Pageable pageable) {
-        return orderRepository.findAll(pageable);
+    public List<Order> findAllOrder() {
+        return orderRepository.findAll();
     }
 }

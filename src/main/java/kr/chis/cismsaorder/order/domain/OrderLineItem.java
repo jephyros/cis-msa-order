@@ -11,6 +11,7 @@ import javax.persistence.*;
  * Remark :
  */
 @Entity
+@Getter
 @Table(name="od_order_item")
 public class OrderLineItem {
     @Id
@@ -23,6 +24,9 @@ public class OrderLineItem {
 //    @ManyToOne
 //    @JoinColumn(name ="oi_od_id",nullable = false,updatable = false)
 //    private Order order;
+
+    @Column(name="oi_od_id")
+    private Long orderId;
 
     @Column(name="oi_name")
     private String itemName;

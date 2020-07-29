@@ -1,7 +1,6 @@
 package kr.chis.cismsaorder.order.domain;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 /**
  * @author InSeok
@@ -9,7 +8,7 @@ import org.springframework.data.domain.Pageable;
  * Remark :
  */
 public interface OrderRepositoryCustom {
-    Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable);
+    List<OrderLineItemDto> findAllSearchString(String ordername);
 
     //findAllBySearchStrings(String userid, String evcode, String evname, Pageable pageable);
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * Remark :
  */
 
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderLineItemDto {

@@ -5,6 +5,8 @@ import kr.chis.cismsaorder.order.domain.OrderLineItemDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * @author InSeok
  * Date : 2020-07-15
@@ -18,6 +20,6 @@ public interface OrderService {
 
     void del(Long orderid);
 
-    Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable);
-    Page<Order> findAllOrder(Pageable pageable);
+    List<OrderLineItemDto> findAllSearchString(String ordername);
+    List<Order> findAllOrder();
 }

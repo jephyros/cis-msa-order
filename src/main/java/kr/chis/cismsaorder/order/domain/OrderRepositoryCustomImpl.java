@@ -2,9 +2,6 @@ package kr.chis.cismsaorder.order.domain;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -23,17 +20,15 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport impleme
     }
 
     @Override
-    public Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable) {
+    public List<OrderLineItemDto> findAllSearchString(String ordername) {
 
         QOrder qOrder=QOrder.order;
         QOrderLineItem qOrderLineItem = QOrderLineItem.orderLineItem;
-        JPQLQuery<OrderLineItemDto> query = from(qOrderLineItem)
-                //.innerJoin(qOrder.orderLineItems)
+        JPQLQuery<OrderLineItemDto> query = from(qOrder)
+                .innerJoin(qOrderLineItem).on(qOrder.id.eq(qOrderLineItem.orderId))
                 .select(Projections.constructor(OrderLineItemDto.class,
-//                        qOrder.id,
-//                        qOrder.orderName,
-                        qOrderLineItem.id,
-                        qOrderLineItem.itemName,
+                        qOrder.id,
+                        qOrder.orderName,
                         qOrderLineItem.itemName,
                         qOrderLineItem.orderQty
                         ));
@@ -41,8 +36,10 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport impleme
         if (ordername != null && !ordername.isEmpty()){
             query.where(qOrder.orderName.containsIgnoreCase(ordername));
         }
-        final List<OrderLineItemDto> orders = getQuerydsl().applyPagination(pageable,query).fetch();
-        return new PageImpl<>(orders,pageable,query.fetchCount());
+        //final List<OrderLineItemDto> orders = getQuerydsl().applyPagination(pageable,query).fetch();
+        List<OrderLineItemDto> orders = query.fetch();
+        return orders;
+        //return new PageImpl<>(orders,pageable,query.fetchCount());
 
     }
 }
