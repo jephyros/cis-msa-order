@@ -3,9 +3,15 @@ package kr.chis.cismsaorder.order.controller;
 import kr.chis.cismsaorder.common.OrderStatus;
 import kr.chis.cismsaorder.order.domain.Order;
 import kr.chis.cismsaorder.order.domain.OrderLineItem;
+import kr.chis.cismsaorder.order.domain.OrderLineItemDto;
 import kr.chis.cismsaorder.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * @author InSeok
@@ -64,13 +71,31 @@ public class OrderRestController {
         orderService.save(order);
         return null;
     }
-    @PostMapping("del")
-    public ResponseEntity orderDel(@RequestParam(value="orderid", defaultValue="0") String orderid){
+    @DeleteMapping("{id}")
+    public ResponseEntity orderDel(@PathVariable("id") Long orderid){
 
+        log.info("======== order id : {}",orderid);
 
-        orderService.del(Long.valueOf(orderid));
+        try {
+            orderService.del(orderid);
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
         return null;
     }
+    @GetMapping("list")
+    public Page<OrderLineItemDto> orderList(@RequestParam(value="ordername", defaultValue="") String ordername
+                                            , @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
+
+        return orderService.findAllSearchString(ordername, pageable);
+    }
+    @GetMapping("list2")
+    public Page<Order> orderList2(
+             @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
+
+        return orderService.findAllOrder(pageable);
+    }
+
 
     @GetMapping("/resttest")
     public Mono<String> rest(int idx) {

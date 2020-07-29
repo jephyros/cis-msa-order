@@ -1,16 +1,14 @@
 package kr.chis.cismsaorder.order.service;
 
-import kr.chis.cismsaorder.common.OrderStatus;
-import kr.chis.cismsaorder.order.domain.Order;
-import kr.chis.cismsaorder.order.domain.OrderRepository;
-import kr.chis.cismsaorder.order.domain.OrderValidator;
+import kr.chis.cismsaorder.order.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * @author InSeok
@@ -21,12 +19,14 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService  {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
+    private final OrderRepositoryCustom orderRepositoryCustom;
     private final KafkaTemplate<String ,String> kafkaTemplate;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator, KafkaTemplate<String, String> kafkaTemplate) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator, OrderRepositoryCustom orderRepositoryCustom, KafkaTemplate<String, String> kafkaTemplate) {
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
+        this.orderRepositoryCustom = orderRepositoryCustom;
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -70,5 +70,15 @@ public class OrderServiceImpl implements OrderService  {
                  throw new NoSuchElementException("삭제하고자하는 데이터가 없습니다.");
                 }
             );
+    }
+
+    @Override
+    public Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable) {
+        return orderRepositoryCustom.findAllSearchString(ordername,pageable);
+    }
+
+    @Override
+    public Page<Order> findAllOrder(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 }

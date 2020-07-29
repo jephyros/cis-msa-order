@@ -1,6 +1,9 @@
 package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.order.domain.Order;
+import kr.chis.cismsaorder.order.domain.OrderLineItemDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author InSeok
@@ -8,10 +11,13 @@ import kr.chis.cismsaorder.order.domain.Order;
  * Remark :
  */
 public interface OrderService {
-    public Order save(Order order);
-    public Order cancel(Order order);
+    Order save(Order order);
+    Order cancel(Order order);
 
-    public Order orderAccept(Long orderId);
+    Order orderAccept(Long orderId);
 
-    public void del(Long orderid);
+    void del(Long orderid);
+
+    Page<OrderLineItemDto> findAllSearchString(String ordername, Pageable pageable);
+    Page<Order> findAllOrder(Pageable pageable);
 }
