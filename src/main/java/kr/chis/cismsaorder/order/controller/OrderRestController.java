@@ -72,6 +72,20 @@ public class OrderRestController {
         orderService.save(order);
         return null;
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity orderUpdate(@PathVariable("id") Long orderid){
+
+        log.info("======== order id : {}",orderid);
+
+        try {
+            orderService.update(orderid);
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity orderDel(@PathVariable("id") Long orderid){
 

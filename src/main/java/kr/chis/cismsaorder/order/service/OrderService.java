@@ -22,4 +22,6 @@ public interface OrderService {
 
     List<OrderLineItemDto> findAllSearchString(String ordername);
     List<Order> findAllOrder();
+
+    void update(Long orderid);
 }

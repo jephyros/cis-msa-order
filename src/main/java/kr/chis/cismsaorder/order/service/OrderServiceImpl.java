@@ -1,6 +1,7 @@
 package kr.chis.cismsaorder.order.service;
 
 import kr.chis.cismsaorder.order.domain.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.NoSuchElementException;
  * Remark :
  */
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService  {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
@@ -79,5 +81,19 @@ public class OrderServiceImpl implements OrderService  {
     @Override
     public List<Order> findAllOrder() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void update(Long orderid) {
+        orderRepository.findById(orderid).ifPresentOrElse(
+                (order)->{
+                    order.updateOrder("오더명변경");
+                    //log.info(" ======== order name : {}" ,order.getOrderName());
+                },
+                ()->{
+                    throw new NoSuchElementException("수정하고자하는 데이터가 없습니다.");
+                }
+        );
     }
 }

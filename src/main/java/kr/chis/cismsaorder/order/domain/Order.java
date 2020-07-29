@@ -30,6 +30,10 @@ public class Order extends AbstractAggregateRoot<Order> {
     @Column(name="od_name")
     private String orderName;
 
+    @Version
+    @Column(name ="od_version")
+    private Long version;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name ="oi_od_id")
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
@@ -77,6 +81,10 @@ public class Order extends AbstractAggregateRoot<Order> {
         this.orderAmoumt = orderAmoumt;
     }
 
+    public Order updateOrder(String orderName){
+        this.orderName = this.orderName + "/" +orderName;
+        return this;
+    }
 
 
     public Order savePublish(){
