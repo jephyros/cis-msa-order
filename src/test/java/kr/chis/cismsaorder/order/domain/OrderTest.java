@@ -3,6 +3,10 @@ package kr.chis.cismsaorder.order.domain;
 import kr.chis.cismsaorder.common.OrderStatus;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import static kr.chis.cismsaorder.TestDataProduct.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
