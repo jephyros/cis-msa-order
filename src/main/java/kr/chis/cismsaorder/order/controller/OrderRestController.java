@@ -110,12 +110,12 @@ public class OrderRestController {
         return orderService.findAllSearchString(ordername);
     }
     @GetMapping("list2")
-    public Page<Order> orderList2(){
-        Integer page =  1; //request.queryParam("page").isPresent() ? Integer.parseInt(request.queryParam("page").get()) - 1 : 0;
-        Integer size = 2; //request.queryParam("pagesize").isPresent() ? Integer.parseInt(request.queryParam("pagesize").get()) : 20;
+    public Page<Order> orderList2(@RequestParam(value="page", defaultValue="1") int page,
+                                  @RequestParam(value="size", defaultValue="15") int size
+                            ){
 
 
-        return orderRepository.findAll(PageRequest.of(page, size));
+        return orderRepository.findAll(PageRequest.of(page - 1, size));
 
 //        return Mono.just()
 //                .flatMap(orders -> ok().body(orders,Order.class))
