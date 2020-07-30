@@ -34,7 +34,7 @@ public class Order extends AbstractAggregateRoot<Order> {
     @Column(name ="od_version")
     private Long version;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name ="oi_od_id")
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
 

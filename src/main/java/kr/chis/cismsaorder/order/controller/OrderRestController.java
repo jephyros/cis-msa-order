@@ -4,23 +4,26 @@ import kr.chis.cismsaorder.common.OrderStatus;
 import kr.chis.cismsaorder.order.domain.Order;
 import kr.chis.cismsaorder.order.domain.OrderLineItem;
 import kr.chis.cismsaorder.order.domain.OrderLineItemDto;
+import kr.chis.cismsaorder.order.domain.OrderRepository;
 import kr.chis.cismsaorder.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
+
+import static org.springframework.web.reactive.function.server.EntityResponse.fromObject;
+import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
+import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 /**
  * @author InSeok
@@ -39,11 +42,13 @@ public class OrderRestController {
 //    private final String URL2 = "http://localhost:8081/service2?req={req}";
 
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
     WebClient client = WebClient.create();
 
     @Autowired
-    public OrderRestController(OrderService orderService) {
+    public OrderRestController(OrderService orderService, OrderRepository orderRepository) {
         this.orderService = orderService;
+        this.orderRepository = orderRepository;
     }
 
     @PostMapping("reg")
@@ -105,9 +110,16 @@ public class OrderRestController {
         return orderService.findAllSearchString(ordername);
     }
     @GetMapping("list2")
-    public List<Order> orderList2(){
+    public Page<Order> orderList2(){
+        Integer page =  1; //request.queryParam("page").isPresent() ? Integer.parseInt(request.queryParam("page").get()) - 1 : 0;
+        Integer size = 2; //request.queryParam("pagesize").isPresent() ? Integer.parseInt(request.queryParam("pagesize").get()) : 20;
 
-        return orderService.findAllOrder();
+
+        return orderRepository.findAll(PageRequest.of(page, size));
+
+//        return Mono.just()
+//                .flatMap(orders -> ok().body(orders,Order.class))
+//                .switchIfEmpty(notFound().build());
     }
 
 
