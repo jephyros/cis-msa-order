@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface OrderRepositoryCustom {
     List<OrderLineItemDto> findAllSearchString(String ordername);
+    List<OrderLineItemDto> findAllSearchString2(String ordername);
 
     //findAllBySearchStrings(String userid, String evcode, String evname, Pageable pageable);
 }

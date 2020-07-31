@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     public List<OrderLineItemDto> findAllSearchString(String ordername) {
-        return orderRepositoryCustom.findAllSearchString(ordername);
+        return orderRepositoryCustom.findAllSearchString2(ordername);
     }
 
     @Override

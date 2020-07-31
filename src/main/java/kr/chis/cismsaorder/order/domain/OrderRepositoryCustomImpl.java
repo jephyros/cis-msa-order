@@ -24,8 +24,10 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport impleme
 
         QOrder qOrder=QOrder.order;
         QOrderLineItem qOrderLineItem = QOrderLineItem.orderLineItem;
+
+
         JPQLQuery<OrderLineItemDto> query = from(qOrder)
-                .innerJoin(qOrderLineItem).on(qOrder.id.eq(qOrderLineItem.orderId))
+                .join(qOrderLineItem).on(qOrder.id.eq(qOrderLineItem.orderId))
                 .select(Projections.constructor(OrderLineItemDto.class,
                         qOrder.id,
                         qOrder.orderName,
@@ -37,6 +39,28 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport impleme
             query.where(qOrder.orderName.containsIgnoreCase(ordername));
         }
         //final List<OrderLineItemDto> orders = getQuerydsl().applyPagination(pageable,query).fetch();
+        List<OrderLineItemDto> orders = query.fetch();
+        return orders;
+        //return new PageImpl<>(orders,pageable,query.fetchCount());
+
+    }
+
+    @Override
+    public List<OrderLineItemDto> findAllSearchString2(String ordername) {
+
+        QOrder qOrder=QOrder.order;
+        QOrderLineItem qOrderLineItem = QOrderLineItem.orderLineItem;
+
+        JPQLQuery<OrderLineItemDto> query = from(qOrder)
+                .innerJoin(qOrderLineItem).on(qOrder.id.eq(qOrderLineItem.orderId))
+                .select(
+                        new QOrderLineItemDto(qOrder.id, qOrder.orderName, qOrderLineItem.itemName, qOrderLineItem.orderQty)
+                );
+
+        if (ordername != null && !ordername.isEmpty()){
+            query.where(qOrder.orderName.containsIgnoreCase(ordername));
+        }
+//        //final List<OrderLineItemDto> orders = getQuerydsl().applyPagination(pageable,query).fetch();
         List<OrderLineItemDto> orders = query.fetch();
         return orders;
         //return new PageImpl<>(orders,pageable,query.fetchCount());

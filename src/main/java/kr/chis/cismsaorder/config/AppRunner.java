@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 public class AppRunner implements ApplicationRunner {
     @Autowired
     ShopRepository shopRepository;
+
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //Shop 저장
@@ -25,5 +27,6 @@ public class AppRunner implements ApplicationRunner {
                 .shopStatus(ShopStatus.OPEN)
                 .shopName("양꼬치대장").build();
         shopRepository.save(s1);
+
     }
 }
