@@ -6,7 +6,12 @@ import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +26,8 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name="od_order")
+@Audited
+@EntityListeners(AuditingEntityListener.class)
 public class Order extends AbstractAggregateRoot<Order> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +43,7 @@ public class Order extends AbstractAggregateRoot<Order> {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name ="oi_od_id")
+    @NotAudited
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     @Column(name="od_shop_id")
@@ -54,6 +62,12 @@ public class Order extends AbstractAggregateRoot<Order> {
 
     @Column(name="insert_id")
     private String insert_id;
+
+    @CreatedDate
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifyData;
 
     private Long orderAmoumt;
 
