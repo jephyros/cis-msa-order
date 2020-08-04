@@ -1,6 +1,8 @@
 package kr.chis.cismsaorder.common;
 
 import lombok.Getter;
+import org.hibernate.envers.Audited;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,12 +17,13 @@ import java.time.LocalDateTime;
 /**
  * @author InSeok
  * Date : 2020-08-04
- * Remark : 등록자,수정자를 관리하기위한 엔터티 베이스
+ * Remark :
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-public class BaseEntity {
+@Audited
+public class BaseEntityWithoutAggreagteRoot {
     @CreatedDate
     @Column(name="create_date")
     private LocalDateTime createDate;

@@ -1,18 +1,14 @@
 package kr.chis.cismsaorder.order.domain;
 
+import kr.chis.cismsaorder.common.BaseEntityWithAggreagteRoot;
 import kr.chis.cismsaorder.common.OrderStatus;
 import kr.chis.cismsaorder.order.event.OrderCanceledEvent;
 import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.AbstractAggregateRoot;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,8 +24,8 @@ import java.util.List;
 @Getter
 @Table(name="od_order")
 @Audited
-@EntityListeners(AuditingEntityListener.class)
-public class Order extends AbstractAggregateRoot<Order> {
+@AuditOverride(forClass=BaseEntityWithAggreagteRoot.class)
+public class Order extends BaseEntityWithAggreagteRoot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="od_id")
@@ -58,21 +54,7 @@ public class Order extends AbstractAggregateRoot<Order> {
     private LocalDateTime orderStatusTime;
 
 
-    @CreatedDate
-    @Column(name="create_date")
-    private LocalDateTime createDate;
 
-    @CreatedBy
-    @Column(name="create_id")
-    private String createId;
-
-    @LastModifiedDate
-    @Column(name="modify_date")
-    private LocalDateTime modifyData;
-
-    @LastModifiedBy
-    @Column(name="modify_id")
-    private String modifyId;
 
 
 

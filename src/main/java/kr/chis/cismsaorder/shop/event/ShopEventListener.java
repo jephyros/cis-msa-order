@@ -27,6 +27,7 @@ public class ShopEventListener {
     @EventListener
     public void orderedEventhandle(OrderedEvent event) {
         //오더등록이벤트수신
+        System.out.println("OrderedCreateEvent=====" + event.getOrderName());
         // 1. Ticket 을 발행
         ticketService.create(event.getOrderId());
         // 2. 티켓발행 이벤트 발행
