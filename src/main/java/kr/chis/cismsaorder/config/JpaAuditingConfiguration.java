@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -14,11 +15,12 @@ import java.util.Random;
  */
 @Configuration
 @EnableJpaAuditing
-public class JpaAuditingConfiguration {
-//    @Bean
-//    public AuditorAware<String> auditorProvider(){
-//        return () -> "이름" + new Random().nextInt(100);
-//
-//    }
+public class JpaAuditingConfiguration implements AuditorAware<String> {
+
+    @Override
+    @Bean
+    public Optional<String> getCurrentAuditor() {
+        return Optional.ofNullable("이름" + new Random().nextInt(100));
+    }
 
 }

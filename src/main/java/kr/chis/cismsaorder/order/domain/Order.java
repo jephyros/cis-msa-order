@@ -5,10 +5,11 @@ import kr.chis.cismsaorder.order.event.OrderCanceledEvent;
 import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -57,17 +58,23 @@ public class Order extends AbstractAggregateRoot<Order> {
     private LocalDateTime orderStatusTime;
 
 
-    @Column(name="insert_date")
-    private LocalDateTime insertDateTime;
-
-    @Column(name="insert_id")
-    private String insert_id;
-
     @CreatedDate
+    @Column(name="create_date")
     private LocalDateTime createDate;
 
+    @CreatedBy
+    @Column(name="create_id")
+    private String createId;
+
     @LastModifiedDate
+    @Column(name="modify_date")
     private LocalDateTime modifyData;
+
+    @LastModifiedBy
+    @Column(name="modify_id")
+    private String modifyId;
+
+
 
     private Long orderAmoumt;
 
@@ -76,22 +83,20 @@ public class Order extends AbstractAggregateRoot<Order> {
     }
 
     public Order(String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, Long orderAmoumt) {
-        this(null,orderName, orderLineItems, shopId, orderStatus, LocalDateTime.now(), LocalDateTime.now(), null, orderAmoumt);
+        this(null,orderName, orderLineItems, shopId, orderStatus, LocalDateTime.now(),  orderAmoumt);
     }
 
     public Order() {
     }
 
     @Builder
-    public Order(Long id,String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime, LocalDateTime insertDateTime, String insert_id, Long orderAmoumt) {
+    public Order(Long id,String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime,  Long orderAmoumt) {
         this.id = id;
         this.orderName = orderName;
         this.orderLineItems.addAll(orderLineItems);
         this.shopId = shopId;
         this.orderStatus = orderStatus;
         this.orderStatusTime = orderStatusTime;
-        this.insertDateTime = insertDateTime;
-        this.insert_id = insert_id;
         this.orderAmoumt = orderAmoumt;
     }
 
