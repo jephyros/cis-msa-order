@@ -6,6 +6,7 @@ import kr.chis.cismsaorder.order.event.OrderCanceledEvent;
 import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Entity
 @Getter
+@ToString(callSuper = true)
 @Table(name="od_order")
 @Audited
 @AuditOverride(forClass=BaseEntityWithAggreagteRoot.class)

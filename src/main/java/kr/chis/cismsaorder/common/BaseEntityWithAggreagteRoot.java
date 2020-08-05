@@ -2,6 +2,7 @@ package kr.chis.cismsaorder.common;
 
 import kr.chis.cismsaorder.order.domain.Order;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@ToString
 public class BaseEntityWithAggreagteRoot extends AbstractAggregateRoot<BaseEntityWithAggreagteRoot> {
     @CreatedDate
     @Column(name="create_date")

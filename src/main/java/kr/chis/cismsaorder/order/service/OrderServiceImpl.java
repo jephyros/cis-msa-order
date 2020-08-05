@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService  {
         order.validate(orderValidator);
         Order saveOrder = orderRepository.save(order.savePublish());
 
-        kafkaTemplate.send("msaorder",saveOrder.toString());
+        kafkaTemplate.send("ordersave",saveOrder.toString());
 
         return saveOrder;
     }

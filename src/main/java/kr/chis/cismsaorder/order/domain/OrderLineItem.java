@@ -12,6 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Getter
+@ToString(exclude = "orderId")
 @Table(name="od_order_item")
 public class OrderLineItem {
     @Id
