@@ -8,13 +8,12 @@ import kr.chis.cismsaorder.order.domain.OrderRepository;
 import kr.chis.cismsaorder.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -103,6 +102,8 @@ public class OrderRestController {
         }
         return null;
     }
+
+    @Cacheable(value = "orderlist",key="#ordername")
     @GetMapping("list")
     public List<OrderLineItemDto> orderList(@RequestParam(value="ordername", defaultValue="") String ordername
                                             ){

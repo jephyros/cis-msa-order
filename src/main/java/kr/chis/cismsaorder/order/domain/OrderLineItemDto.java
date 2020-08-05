@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author InSeok
  * Date : 2020-07-29
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrderLineItemDto {
+public class OrderLineItemDto implements Serializable {
     private Long id;
     private String orderName;
     private String itemName;
