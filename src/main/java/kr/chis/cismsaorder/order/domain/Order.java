@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Entity
 @Getter
-@ToString(callSuper = true)
+@ToString//(callSuper = true)
 @Table(name="od_order")
 @Audited
 @AuditOverride(forClass=BaseEntityWithAggreagteRoot.class)

@@ -21,13 +21,14 @@ public class OrderServiceImpl implements OrderService  {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
     private final OrderRepositoryCustom orderRepositoryCustom;
-    private final KafkaTemplate<String ,String> kafkaTemplate;
+    private final KafkaTemplate<String ,Object> kafkaTemplate;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator, OrderRepositoryCustom orderRepositoryCustom, KafkaTemplate<String, String> kafkaTemplate) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderValidator orderValidator, OrderRepositoryCustom orderRepositoryCustom, KafkaTemplate<String, Object> kafkaTemplate) {
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
         this.orderRepositoryCustom = orderRepositoryCustom;
+
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -38,7 +39,8 @@ public class OrderServiceImpl implements OrderService  {
         order.validate(orderValidator);
         Order saveOrder = orderRepository.save(order.savePublish());
 
-        kafkaTemplate.send("ordersave",saveOrder.toString());
+        //JsonSerializer<Order> tJsonSerializer = new JsonSerializer<>(saveOrder);
+        kafkaTemplate.send("ordersave",saveOrder);
 
         return saveOrder;
     }
