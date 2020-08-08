@@ -32,7 +32,7 @@ public class TestDataProduct {
         return Order.builder()
                 .orderName("test")
                 .shopId(anShop().build().getId())
-                .orderStatus(OrderStatus.ORDER_PENGIND)
+                .orderStatus(OrderStatus.ORDER_PENDING)
                 .orderStatusTime(LocalDateTime.now())
                 .orderLineItems(Arrays.asList(anOrderLineItem().build()))
                 .orderAmoumt(13000L);

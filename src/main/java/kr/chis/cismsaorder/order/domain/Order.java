@@ -84,6 +84,11 @@ public class Order extends BaseEntityWithAggreagteRoot {
         this.orderAmoumt = orderAmoumt;
     }
 
+    public Order acceptOrder(){
+        this.orderStatus = OrderStatus.ORDER_ACCEPT;
+        return this;
+    }
+
     public Order updateOrder(String orderName){
         this.orderName = this.orderName + "/" +orderName;
         return this;
@@ -107,7 +112,19 @@ public class Order extends BaseEntityWithAggreagteRoot {
         orderValidator.validate(this);
     }
     public void ChangeOrderStatusAccept() {
+        if (this.orderStatus != OrderStatus.ORDER_PENDING){
+            throw new IllegalStateException("오더 상태가 오더접수 가 아닙니다.");
+                    //throw new IllegalStateException(String.format("최소 주문 금액은 %s 원 입니다.",shop.getMinOrderAmt()));
+        }
         this.orderStatus = OrderStatus.ORDER_ACCEPT;
+        this.orderStatusTime = LocalDateTime.now();
+    }
+    public void ChangeOrderStatusReject() {
+        if (this.orderStatus != OrderStatus.ORDER_PENDING){
+            throw new IllegalStateException("오더 상태가 오더접수 가 아닙니다.");
+            //throw new IllegalStateException(String.format("최소 주문 금액은 %s 원 입니다.",shop.getMinOrderAmt()));
+        }
+        this.orderStatus = OrderStatus.ORDER_REJECT;
         this.orderStatusTime = LocalDateTime.now();
     }
 }

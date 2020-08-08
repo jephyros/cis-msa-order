@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService  {
         Order saveOrder = orderRepository.save(order.savePublish());
 
         //JsonSerializer<Order> tJsonSerializer = new JsonSerializer<>(saveOrder);
-        kafkaTemplate.send("ordersave",saveOrder);
+        kafkaTemplate.send("Order-ordered",saveOrder);
 
         return saveOrder;
     }
@@ -55,15 +55,25 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     @Transactional
-    public Order orderAccept(Long orderId) {
+    public Order accept(Long orderId) {
         return orderRepository.findById(orderId)
                 .map((order)-> {
                     order.ChangeOrderStatusAccept();
                     return order;
-                }).orElseThrow(()-> new NoSuchElementException("수정하려는 오더가없음니다."));
+                }).orElseThrow(()-> new NoSuchElementException("확정하려는 오더가없음니다."));
 
 
     }
+    @Override
+    @Transactional
+    public Order reject(Long orderId) {
+        return orderRepository.findById(orderId)
+                .map((order)-> {
+                    order.ChangeOrderStatusReject();
+                    return order;
+                }).orElseThrow(()-> new NoSuchElementException("거절하려는 오더가없음니다."));
+    }
+
 
     @Override
     public void del(Long orderid) {
@@ -87,8 +97,8 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     @Transactional
-    public void update(Long orderid) {
-        orderRepository.findById(orderid).ifPresentOrElse(
+    public void update(Long orderId) {
+        orderRepository.findById(orderId).ifPresentOrElse(
                 (order)->{
                     order.updateOrder("오더명변경");
                     //log.info(" ======== order name : {}" ,order.getOrderName());
@@ -98,4 +108,5 @@ public class OrderServiceImpl implements OrderService  {
                 }
         );
     }
+
 }

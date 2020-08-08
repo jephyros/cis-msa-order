@@ -6,8 +6,10 @@ package kr.chis.cismsaorder.common;
  * Remark :
  */
 public enum OrderStatus {
-    ORDER_PENGIND("ORDER_PENGIND", "오더접수"),
-    ORDER_ACCEPT("ORDER_ACCEPT", "오더확정")
+    ORDER_PENDING("ORDER_PENDING", "오더접수"),
+    ORDER_ACCEPT("ORDER_ACCEPT", "오더확정"),
+    ORDER_REJECT("ORDER_REJECT", "오더거절")
+
     ;
 
     private String code;

@@ -20,10 +20,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.web.reactive.function.server.EntityResponse.fromObject;
-import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
-
 /**
  * @author InSeok
  * Date : 2020-07-15
@@ -68,7 +64,7 @@ public class OrderRestController {
                 .orderName("양꼬치주문1번")
                 .shopId(1L)
                 .orderLineItems(Arrays.asList(item1,item2))
-                .orderStatus(OrderStatus.ORDER_PENGIND)
+                .orderStatus(OrderStatus.ORDER_PENDING)
                 .orderStatusTime(LocalDateTime.now())
                 .orderAmoumt(13000L).build();
 
