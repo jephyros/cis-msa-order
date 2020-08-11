@@ -7,8 +7,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.path;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.nest;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -26,6 +25,7 @@ public class OrderRouterFunction {
         return nest(path("/api/order"),
                 route(GET("/list"),handler::orderList)
                 .andRoute(GET("/list2"),handler::orderList2)
+                .andRoute(POST("/"),handler::orderCreate)
         );
 
     }
