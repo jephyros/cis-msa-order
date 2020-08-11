@@ -98,26 +98,6 @@ public class OrderRestController {
         return null;
     }
 
-    //@Cacheable(value = "orderlist",key="#ordername")
-//    @GetMapping("list")
-//    public List<OrderLineItemDto> orderList(@RequestParam(value="ordername", defaultValue="") String ordername
-//                                            ){
-//
-//        return orderService.findAllSearchString(ordername);
-//    }
-    @GetMapping("list2")
-    public Page<Order> orderList2(@RequestParam(value="page", defaultValue="1") int page,
-                                  @RequestParam(value="size", defaultValue="15") int size
-                            ){
-
-
-        return orderRepository.findAll(PageRequest.of(page - 1, size));
-
-//        return Mono.just()
-//                .flatMap(orders -> ok().body(orders,Order.class))
-//                .switchIfEmpty(notFound().build());
-    }
-
 
     @GetMapping("/resttest")
     public Mono<String> rest(int idx) {
