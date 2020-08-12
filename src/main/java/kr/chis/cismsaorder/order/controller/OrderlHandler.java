@@ -21,6 +21,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 /**
@@ -33,13 +34,12 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 public class OrderlHandler {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
-    private final ObjectMapper mapper;
+
 
     @Autowired
-    public OrderlHandler(OrderService orderService, OrderRepository orderRepository, ObjectMapper mapper) {
+    public OrderlHandler(OrderService orderService, OrderRepository orderRepository) {
         this.orderService = orderService;
         this.orderRepository = orderRepository;
-        this.mapper = mapper;
     }
 
     public Mono<ServerResponse> orderList(ServerRequest request){
@@ -59,24 +59,28 @@ public class OrderlHandler {
         return ok().body(list2,Order.class);
     }
     public Mono<ServerResponse> orderCreate(ServerRequest request){
-        log.info("======> {}",request.path());
-        Mono.just("Str")
-                .subscribe(System.out::println);
-
-        Mono<OrderMapper> mono = request.body(BodyExtractors.toMono(String.class))
+        log.info("오더저장 시작 api {}",request.path());
+        return request.bodyToMono(OrderMapper.class)
                 .map(v -> {
-                            try {
-                                return mapper.readValue(v, OrderMapper.class);
-                            } catch (JsonProcessingException e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        }
-                );
+                    log.info("오더저장 검 api {}",request.path());
+                    //int x = 1/0;
+                    //if (1 == 1) throw new IllegalArgumentException("올바른 요청값이 아닙니다.");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    return v;
+
+                })
+                .flatMap(v -> ok().contentType(MediaType.APPLICATION_JSON).body(Mono.just(v), OrderMapper.class));
+                //.onErrorReturn(ServerResponse.badRequest().build().block());
 
 
-        //Mono<String> mono = Mono.empty();
-        return ok().contentType(MediaType.APPLICATION_JSON).body(mono,OrderMapper.class);
+        //.doOnSuccess(v -> ok().contentType(MediaType.APPLICATION_JSON).body(Mono.just(v), OrderMapper.class))
+
+
 
     }
 }
