@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
@@ -18,9 +17,9 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  */
 @Configuration
 @EnableWebFlux
-public class OrderRouterFunction {
+public class OrderRouter {
     @Bean
-    public RouterFunction<ServerResponse> routes(OrderFunctionalHandler handler){
+    public RouterFunction<ServerResponse> routes(OrderlHandler handler){
 
         return nest(path("/api/order"),
                 route(GET("/list"),handler::orderList)

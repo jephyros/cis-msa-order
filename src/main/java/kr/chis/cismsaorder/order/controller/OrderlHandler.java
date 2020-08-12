@@ -1,25 +1,25 @@
 package kr.chis.cismsaorder.order.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.chis.cismsaorder.order.domain.Order;
 import kr.chis.cismsaorder.order.domain.OrderLineItemDto;
+import kr.chis.cismsaorder.order.domain.OrderMapper;
 import kr.chis.cismsaorder.order.domain.OrderRepository;
 import kr.chis.cismsaorder.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyExtractor;
 import org.springframework.web.reactive.function.BodyExtractors;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -30,14 +30,16 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
  */
 @Component
 @Slf4j
-public class OrderFunctionalHandler {
+public class OrderlHandler {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public OrderFunctionalHandler(OrderService orderService, OrderRepository orderRepository) {
+    public OrderlHandler(OrderService orderService, OrderRepository orderRepository, ObjectMapper mapper) {
         this.orderService = orderService;
         this.orderRepository = orderRepository;
+        this.mapper = mapper;
     }
 
     public Mono<ServerResponse> orderList(ServerRequest request){
@@ -61,16 +63,20 @@ public class OrderFunctionalHandler {
         Mono.just("Str")
                 .subscribe(System.out::println);
 
-        Mono<String> mono = request.body(BodyExtractors.toMono(String.class))
+        Mono<OrderMapper> mono = request.body(BodyExtractors.toMono(String.class))
                 .map(v -> {
-                    System.out.println("x : " + v);
-                    return v;
-                });
-        //.subscribe(System.out::println);
+                            try {
+                                return mapper.readValue(v, OrderMapper.class);
+                            } catch (JsonProcessingException e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        }
+                );
+
 
         //Mono<String> mono = Mono.empty();
-        return ok().body(mono,String.class);
-        //Mono<Order> order = Mono.empty();
-        //return ServerResponse.created(URI.create("/api/order")).build();
+        return ok().contentType(MediaType.APPLICATION_JSON).body(mono,OrderMapper.class);
+
     }
 }
