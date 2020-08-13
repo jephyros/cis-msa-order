@@ -25,7 +25,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public Ticket create(Long orderId) {
+    public Ticket create(String orderId) {
         if(!ticketRepository.findByOrderId(orderId).isPresent()){
             Ticket ticket = Ticket.builder()
                     .orderId(orderId)

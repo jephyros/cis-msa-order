@@ -10,5 +10,5 @@ import java.util.Optional;
  * Remark :
  */
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
-    public Optional<Ticket> findByOrderId(Long orderId);
+    public Optional<Ticket> findByOrderId(String orderId);
 }

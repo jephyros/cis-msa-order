@@ -73,7 +73,7 @@ public class OrderRestController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity orderUpdate(@PathVariable("id") Long orderid){
+    public ResponseEntity orderUpdate(@PathVariable("id") String orderid){
 
         log.info("======== order id : {}",orderid);
 
@@ -86,7 +86,7 @@ public class OrderRestController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity orderDel(@PathVariable("id") Long orderid){
+    public ResponseEntity orderDel(@PathVariable("id") String orderid){
 
         log.info("======== order id : {}",orderid);
 

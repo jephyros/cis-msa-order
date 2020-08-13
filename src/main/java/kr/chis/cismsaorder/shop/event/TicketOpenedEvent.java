@@ -24,7 +24,7 @@ public class TicketOpenedEvent extends ApplicationEvent {
     public Long getTicketId(){
         return ticket.getId();
     }
-    public Long getOrderId(){
+    public String getOrderId(){
         return ticket.getOrderId();
     }
 }

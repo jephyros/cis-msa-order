@@ -17,13 +17,13 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class OrderLineItemDto implements Serializable {
-    private Long id;
+    private String id;
     private String orderName;
     private String itemName;
     private Long orderQty;
 
     @QueryProjection
-    public OrderLineItemDto(Long id, String orderName, String itemName, Long orderQty) {
+    public OrderLineItemDto(String id, String orderName, String itemName, Long orderQty) {
         this.id = id;
         this.orderName = orderName;
         this.itemName = itemName;

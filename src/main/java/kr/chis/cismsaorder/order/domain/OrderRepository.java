@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
  * Date : 2020-07-15
  * Remark :
  */
-public interface OrderRepository extends JpaRepository<Order,Long> {
+public interface OrderRepository extends JpaRepository<Order,String> {
 
 }

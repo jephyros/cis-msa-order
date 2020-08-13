@@ -7,6 +7,7 @@ import kr.chis.cismsaorder.order.event.OrderedEvent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -28,10 +29,10 @@ import java.util.List;
 @Audited
 @AuditOverride(forClass=BaseEntityWithAggreagteRoot.class)
 public class Order extends BaseEntityWithAggreagteRoot {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(generator = "uuidGenerator")
+    @GenericGenerator(name="uuidGenerator",strategy = "kr.chis.cismsaorder.common.IdGenerator")
     @Column(name="od_id")
-    private Long id;
+    private String id;
 
     @Column(name="od_name")
     private String orderName;
@@ -74,7 +75,7 @@ public class Order extends BaseEntityWithAggreagteRoot {
     }
 
     @Builder
-    public Order(Long id,String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime,  Long orderAmoumt) {
+    public Order(String id,String orderName, List<OrderLineItem> orderLineItems, Long shopId, OrderStatus orderStatus, LocalDateTime orderStatusTime,  Long orderAmoumt) {
         this.id = id;
         this.orderName = orderName;
         this.orderLineItems.addAll(orderLineItems);

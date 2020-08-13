@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     @Transactional
-    public Order accept(Long orderId) {
+    public Order accept(String orderId) {
         return orderRepository.findById(orderId)
                 .map((order)-> {
                     order.ChangeOrderStatusAccept();
@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService  {
     }
     @Override
     @Transactional
-    public Order reject(Long orderId) {
+    public Order reject(String orderId) {
         return orderRepository.findById(orderId)
                 .map((order)-> {
                     order.ChangeOrderStatusReject();
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService  {
 
 
     @Override
-    public void del(Long orderid) {
+    public void del(String orderid) {
         orderRepository.findById(orderid).ifPresentOrElse(
              (order)-> orderRepository.delete(order)
             ,()-> {
@@ -97,7 +97,7 @@ public class OrderServiceImpl implements OrderService  {
 
     @Override
     @Transactional
-    public void update(Long orderId) {
+    public void update(String orderId) {
         orderRepository.findById(orderId).ifPresentOrElse(
                 (order)->{
                     order.updateOrder("오더명변경");

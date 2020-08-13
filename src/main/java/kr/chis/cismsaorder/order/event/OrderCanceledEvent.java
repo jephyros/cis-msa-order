@@ -20,7 +20,7 @@ public class OrderCanceledEvent extends ApplicationEvent {
         super(source);
         this.order = (Order) source;
     }
-    public Long getOrderId(){
+    public String getOrderId(){
         return order.getId();
     }
     public String getOrderName(){

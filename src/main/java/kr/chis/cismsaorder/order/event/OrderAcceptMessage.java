@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class OrderAcceptMessage {
     private Boolean success;
-    private Long orderId;
+    private String orderId;
     private String errCode;
     private String errMessage;
 
@@ -18,14 +18,14 @@ public class OrderAcceptMessage {
         return success;
     }
 
-    public void success(Long orderId){
+    public void success(String orderId){
         this.success = true;
         this.orderId = orderId;
         this.errCode="";
         this.errMessage="";
 
     }
-    public void fail(Long orderId,String errCode,String errMessage){
+    public void fail(String orderId,String errCode,String errMessage){
         this.success = false;
         this.orderId = orderId;
         this.errCode=errCode;
@@ -34,7 +34,7 @@ public class OrderAcceptMessage {
 
     public OrderAcceptMessage() {
         this.success = true;
-        this.orderId = 0L;
+        this.orderId = "";
         this.errCode="";
         this.errMessage="";
     }

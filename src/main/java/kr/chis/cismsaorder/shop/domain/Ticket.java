@@ -28,7 +28,7 @@ public class Ticket extends AbstractAggregateRoot<Ticket> {
     private Long id;
 
     @Column(name="st_od_id")
-    private Long orderId;
+    private String orderId;
 
     @Enumerated(EnumType.STRING)
     @Column(name="st_status")

@@ -8,5 +8,5 @@ import kr.chis.cismsaorder.shop.domain.Ticket;
  * Remark :
  */
 public interface TicketService {
-    public Ticket create(Long orderId);
+    public Ticket create(String orderId);
 }

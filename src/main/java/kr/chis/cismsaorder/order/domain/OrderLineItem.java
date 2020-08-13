@@ -27,7 +27,7 @@ public class OrderLineItem {
 //    private Order order;
 
     @Column(name="oi_od_id")
-    private Long orderId;
+    private String orderId;
 
     @Column(name="oi_name")
     private String itemName;

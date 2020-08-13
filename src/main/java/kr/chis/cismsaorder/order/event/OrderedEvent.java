@@ -25,7 +25,7 @@ public class OrderedEvent extends ApplicationEvent {
         this.eventTimestamp = System.currentTimeMillis();
     }
 
-    public Long getOrderId(){
+    public String getOrderId(){
         return order.getId();
     }
     public String getOrderName(){

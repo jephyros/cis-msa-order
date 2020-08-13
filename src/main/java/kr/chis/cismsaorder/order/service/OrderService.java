@@ -16,13 +16,13 @@ public interface OrderService {
     Order save(Order order);
     Order cancel(Order order);
 
-    Order accept(Long orderId);
-    Order reject(Long orderId);
+    Order accept(String orderId);
+    Order reject(String orderId);
 
-    void del(Long orderid);
+    void del(String orderid);
 
     List<OrderLineItemDto> findAllSearchString(String ordername);
     List<Order> findAllOrder();
 
-    void update(Long orderId);
+    void update(String orderId);
 }
