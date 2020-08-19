@@ -22,7 +22,7 @@ public class LoadTest {
         ExecutorService es = Executors.newFixedThreadPool(100);
 
         RestTemplate rt = new RestTemplate();
-        String url = "http://localhost:8180/api/order";
+        String url = "http://localhost:8181/api/v1/shops";
         //String url = "http://aci.broadwave.co.kr";
 
 
@@ -37,10 +37,10 @@ public class LoadTest {
 
                 log.info("Thread {}", idx);
                 sw.start();
-                //String result = rt.getForObject(url, String.class);
+                String result = rt.getForObject(url, String.class);
 
-                OrderMapper reqParam = new OrderMapper("오더"+ idx,1L);
-                OrderMapper result = rt.postForObject(url, reqParam, OrderMapper.class);
+//                OrderMapper reqParam = new OrderMapper("오더"+ idx,1L);
+//                OrderMapper result = rt.postForObject(url, reqParam, OrderMapper.class);
 
                 sw.stop();
                 log.info("Elasped {} : {} - result : {}", idx, sw.getTotalTimeSeconds(), result.toString());
